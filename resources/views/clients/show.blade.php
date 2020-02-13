@@ -117,10 +117,15 @@
                     <h6 class="m-0 font-weight-bold text-info">Active Tasks</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="../tasks/detail.html" class="text-info">Task 1</a></li>
-                        <li><a href="../tasks/detail.html" class="text-info">Task 2</a></li>
-                    </ul>
+                    @if($latest_open_tasks->count() > 0)
+                        <ul>
+                            @foreach($latest_open_tasks as $task)
+                                <li><a href="{{ action('TaskController@show', ['task' => $task]) }}" class="text-info">{{ $task->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Active Tasks</p>
+                    @endif
                 </div>
             </div>
 

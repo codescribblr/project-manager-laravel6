@@ -30,7 +30,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Project Details</h6>
                 </div>
                 <div class="card-body">
-                    <p><strong>Client:</strong> <a href="{{ action('ClientController@show', ['client' => $project->client]) }}">{{ $project->client->name }}</a></p>
+                    <p><strong>Client:</strong> <a href="{{ action('ClientController@show', ['client' => $project->client]) }}" class="text-success">{{ $project->client->name }}</a></p>
                     <p><strong>Project:</strong> {{ $project->description }}</p>
                     <p><strong>Private Info:</strong> <br>
                         <code>{{ $project->private_info }}</code></p>
@@ -57,10 +57,15 @@
                     <h6 class="m-0 font-weight-bold text-info">Open Tasks</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="../projects/detail.html" class="text-info">Task 1</a></li>
-                        <li><a href="../projects/detail.html" class="text-info">Task 2</a></li>
-                    </ul>
+                    @if($project->tasks->where('status', 'open')->count() > 0)
+                        <ul>
+                            @foreach($project->tasks->where('status', 'open') as $task)
+                                <li><a href="{{ action('TaskController@show', ['task' => $task]) }}" class="text-info">{{ $task->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Active Projects</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -72,10 +77,15 @@
                     <h6 class="m-0 font-weight-bold text-info">Completed Tasks</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="../projects/detail.html" class="text-info">Task 1</a></li>
-                        <li><a href="../projects/detail.html" class="text-info">Task 2</a></li>
-                    </ul>
+                    @if($project->tasks->where('status', 'completed')->count() > 0)
+                        <ul>
+                            @foreach($project->tasks->where('status', 'completed') as $task)
+                                <li><a href="{{ action('TaskController@show', ['task' => $task]) }}" class="text-info">{{ $task->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Active Projects</p>
+                    @endif
                 </div>
             </div>
 

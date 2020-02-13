@@ -29,3 +29,11 @@ Route::get('projects/{project}/notes/{note}/delete', 'ProjectNoteController@dest
 Route::resource('projects.notes', 'ProjectNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
+
+Route::get('tasks/{task}/delete', 'TaskController@destroyConfirm');
+Route::resource('tasks', 'TaskController');
+
+Route::get('tasks/{task}/notes/{note}/delete', 'TaskNoteController@destroyConfirm');
+Route::resource('tasks.notes', 'TaskNoteController')->only([
+    'create', 'store', 'edit', 'update', 'destroy',
+]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -67,7 +68,17 @@ class ClientController extends Controller
         return view('clients.show')
             ->with('client', $client)
             ->with('latest_active_projects', $client->projects->where('status', 'active')->sortByDesc('updated_at')->slice(0, 5))
-            ->with('latest_inactive_projects', $client->projects->where('status', 'inactive')->sortByDesc('updated_at')->slice(0, 5));
+            ->with('latest_inactive_projects', $client->projects->where('status', 'inactive')->sortByDesc('updated_at')->slice(0, 5))
+            ->with('latest_open_tasks', \App\Task::hydrate(
+                DB::table('tasks')
+                    ->join('projects', function($join) use ($client) {
+                        $join->on('projects.id', '=', 'tasks.project_id')
+                            ->where('projects.client_id', '=', $client->id);
+                    })->select('tasks.*')
+                    ->limit(5)
+                    ->get()
+                    ->toArray()
+            ));
     }
 
     /**

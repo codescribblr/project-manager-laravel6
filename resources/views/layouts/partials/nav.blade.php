@@ -38,7 +38,7 @@
 
     <!-- Nav Item - Tasks -->
     <li class="nav-item">
-        <a class="nav-link" href="tasks/list.html">
+        <a class="nav-link" href="{{ action('TaskController@index') }}">
             <i class="fas fa-fw fa-tasks"></i>
             <span>Tasks</span></a>
     </li>

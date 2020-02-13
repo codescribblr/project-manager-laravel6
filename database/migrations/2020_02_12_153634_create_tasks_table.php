@@ -19,7 +19,7 @@ class CreateTasksTable extends Migration
             $table->string('name', 255);
             $table->text('description')->nullable();
             $table->date('start_date')->nullable()->default(Carbon::now());
-            $table->date('end_date')->nullable();
+            $table->date('due_date')->nullable();
             $table->enum('status', ['open', 'completed'])->default('open');
             $table->unsignedBigInteger('project_id')->index('project_id')->comment('The corresponding project.');
             $table->timestamps();

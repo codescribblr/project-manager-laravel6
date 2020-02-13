@@ -10,7 +10,7 @@
 @endif
 <div class="form-group">
     <label for="name">Project Name</label>
-    <input type="text" name="name" class="form-control warning" required id="name" placeholder="Enter project name" value="{{ old('name') ? old('name') : @$project->name }}">
+    <input type="text" name="name" class="form-control" required id="name" placeholder="Enter project name" value="{{ old('name') ? old('name') : @$project->name }}">
     <small class="form-text text-danger">{{ $errors->first('name') }}</small>
 </div>
 <div class="form-group">
