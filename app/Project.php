@@ -25,4 +25,9 @@ class Project extends Model
         return $this->hasMany('App\Task');
     }
 
+    public function servers()
+    {
+        return $this->belongsToMany('App\Server');
+    }
+
 }

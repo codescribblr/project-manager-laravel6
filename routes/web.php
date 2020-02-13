@@ -37,3 +37,11 @@ Route::get('tasks/{task}/notes/{note}/delete', 'TaskNoteController@destroyConfir
 Route::resource('tasks.notes', 'TaskNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
+
+Route::get('servers/{server}/delete', 'ServerController@destroyConfirm');
+Route::resource('servers', 'ServerController');
+
+Route::get('servers/{server}/notes/{note}/delete', 'ServerNoteController@destroyConfirm');
+Route::resource('servers.notes', 'ServerNoteController')->only([
+    'create', 'store', 'edit', 'update', 'destroy',
+]);

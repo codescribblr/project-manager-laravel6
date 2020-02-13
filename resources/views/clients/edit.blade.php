@@ -20,6 +20,7 @@
             <div class="col-lg-6 mb-4">
                 @include('clients.fields')
 
+                <a href="{{ action('ClientController@show', ['client' => $client]) }}" class="btn btn-lg btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-success">Update Client</button>
 
             </div>

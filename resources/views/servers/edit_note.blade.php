@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @section('page-title')
-    Edit Project Note
+    Edit Server Note
 @endsection
 
 @section('page-heading')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Edit Project Note</h1>
+        <h1 class="h3 mb-0 text-gray-800">Edit Server Note</h1>
     </div>
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ action('ProjectNoteController@update', ['project' => $project, 'note' => $note]) }}">
+    <form method="POST" action="{{ action('ServerNoteController@update', ['server' => $server, 'note' => $note]) }}">
         @method('PUT')
         @csrf
         <!-- Content Row -->
@@ -24,8 +24,8 @@
                     <small class="form-text text-danger">{{ $errors->first('details') }}</small>
                 </div>
 
-                <a href="{{ action('ProjectController@show', ['project' => $project]) }}" class="btn btn-lg btn-danger">Cancel</a>
-                <button type="submit" class="btn btn-lg btn-primary">Update Project Note</button>
+                <a href="{{ action('ServerController@show', ['server' => $server]) }}" class="btn btn-lg btn-warning">Cancel</a>
+                <button type="submit" class="btn btn-lg btn-warning">Update Server Note</button>
 
             </div>
         </div>

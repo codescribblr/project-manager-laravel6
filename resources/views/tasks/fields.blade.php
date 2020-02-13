@@ -20,12 +20,12 @@
 </div>
 <div class="form-group">
     <label for="start_date">Task Start Date</label>
-    <input type="date" name="start_date" class="form-control warning" id="start_date" placeholder="yyyy-mm-dd" value="{{ old('start_date') ? old('start_date') : @$task->start_date }}">
+    <input type="date" name="start_date" class="form-control" id="start_date" placeholder="yyyy-mm-dd" value="{{ old('start_date') ? old('start_date') : @$task->start_date }}">
     <small class="form-text text-danger">{{ $errors->first('start_date') }}</small>
 </div>
 <div class="form-group">
     <label for="due_date">Task Due Date</label>
-    <input type="date" name="due_date" class="form-control warning" id="start_date" placeholder="yyyy-mm-dd" value="{{ old('due_date') ? old('due_date') : @$task->due_date }}">
+    <input type="date" name="due_date" class="form-control" id="start_date" placeholder="yyyy-mm-dd" value="{{ old('due_date') ? old('due_date') : @$task->due_date }}">
     <small class="form-text text-danger">{{ $errors->first('due_date') }}</small>
 </div>
 @if(isset($task->status))

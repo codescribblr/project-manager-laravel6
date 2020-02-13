@@ -20,6 +20,7 @@
             <div class="col-lg-6 mb-4">
                 @include('projects.fields')
 
+                <a href="{{ action('ProjectController@show', ['project' => $project]) }}" class="btn btn-lg btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-primary">Update Project</button>
 
             </div>

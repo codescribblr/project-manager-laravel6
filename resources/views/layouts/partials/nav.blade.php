@@ -45,7 +45,7 @@
 
     <!-- Nav Item - Servers -->
     <li class="nav-item">
-        <a class="nav-link" href="servers/list.html">
+        <a class="nav-link" href="{{ action('ServerController@index') }}">
             <i class="fas fa-fw fa-server"></i>
             <span>Servers</span></a>
     </li>

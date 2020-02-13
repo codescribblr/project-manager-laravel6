@@ -21,6 +21,7 @@ class CreateServersTable extends Migration
             $table->unsignedInteger('cost')->default(0)->comment('Monthly cost in whole cents');
             $table->unsignedInteger('slots')->default(10);
             $table->text('capacity')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
             $table->softDeletes();
         });

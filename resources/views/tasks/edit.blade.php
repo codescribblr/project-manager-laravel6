@@ -20,6 +20,7 @@
             <div class="col-lg-6 mb-4">
                 @include('tasks.fields')
 
+                <a href="{{ action('TaskController@show', ['task' => $task]) }}" class="btn btn-lg btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-info">Update Task</button>
 
             </div>
