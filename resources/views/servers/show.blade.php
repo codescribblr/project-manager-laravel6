@@ -46,7 +46,7 @@
     
     <div class="row">
         <div class="col-lg-12 mb-2">
-            <h2 class="h4 mb-0 text-gray-800">Files</h2>
+            <h2 class="h4 mb-0 text-gray-800">Projects</h2>
         </div>
     </div>
 
@@ -58,24 +58,15 @@
                     <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="" class="text-primary">Project 1</a></li>
-                        <li><a href="" class="text-primary">Project 2</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 mb-4">
-            <div class="card mb-2">
-                <!-- Inactive Servers -->
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-warning">Files</h6>
-                </div>
-                <div class="card-body">
-                    <ul>
-                        <li><a href="" class="text-warning">File 1</a></li>
-                        <li><a href="" class="text-warning">File 2</a></li>
-                    </ul>
+                    @if($server->projects->count() > 0)
+                        <ul>
+                            @foreach($server->projects->where('status', 'active') as $project)
+                                <li><a href="{{ action('ProjectController@show', ['project' => $project]) }}" class="text-primary">{{ $project->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Active Projects</p>
+                    @endif
                 </div>
             </div>
         </div>

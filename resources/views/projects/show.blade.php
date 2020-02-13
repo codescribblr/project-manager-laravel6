@@ -107,10 +107,16 @@
                     <h6 class="m-0 font-weight-bold text-warning">Servers</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="../servers/detail.html" class="text-warning">Server 1</a></li>
-                        <li><a href="../servers/detail.html" class="text-warning">Server 2</a></li>
-                    </ul>
+                    @if($project->servers->where('status', 'active')->count() > 0)
+                        <ul>
+                            @foreach($project->servers->where('status', 'active') as $server)
+                                <li><a href="{{ action('ServerController@show', ['server' => $server]) }}" class="text-warning">{{ $server->hostname }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Active Servers</p>
+                    @endif
+                    <p><a href="{{ action('ServerController@attach', ['project' => $project]) }}" class="btn btn-warning">Attach A Server</a></p>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Server;
+use App\Project;
 use Illuminate\Http\Request;
 
 class ServerController extends Controller
@@ -122,5 +123,23 @@ class ServerController extends Controller
     {
         $server->delete();
         return redirect()->action('ServerController@index');
+    }
+
+    /**
+     * Show the form for attaching a server.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function attach(Request $request, Project $project)
+    {
+        if($request->isMethod('post')){
+            $server = Server::find($request->input('server'));
+            $project->servers()->save($server);
+            return redirect()->action('ProjectController@show', ['project' => $project]);
+        }
+        $servers = Server::all();
+        return view('servers.attach')
+            ->with('project', $project)
+            ->with('servers', $servers);
     }
 }

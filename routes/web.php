@@ -45,3 +45,6 @@ Route::get('servers/{server}/notes/{note}/delete', 'ServerNoteController@destroy
 Route::resource('servers.notes', 'ServerNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
+
+Route::get('servers/attach/{project?}', 'ServerController@attach')->name('attach_server');
+Route::post('servers/attach/{project?}', 'ServerController@attach')->name('attach_server');

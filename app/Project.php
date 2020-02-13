@@ -27,7 +27,7 @@ class Project extends Model
 
     public function servers()
     {
-        return $this->belongsToMany('App\Server');
+        return $this->belongsToMany('App\Server', 'projects_servers');
     }
 
 }
