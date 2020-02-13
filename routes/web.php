@@ -12,3 +12,12 @@
 */
 
 Route::get('/', 'DashboardController');
+
+
+Route::get('clients/{client}/delete', 'ClientController@destroyConfirm');
+Route::resource('clients', 'ClientController');
+
+Route::get('clients/{client}/notes/{note}/delete', 'ClientNoteController@destroyConfirm');
+Route::resource('clients.notes', 'ClientNoteController')->only([
+    'create', 'store', 'edit', 'update', 'destroy',
+]);
