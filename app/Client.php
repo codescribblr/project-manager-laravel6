@@ -18,4 +18,9 @@ class Client extends Model
     {
         return $this->hasMany('App\ClientNote');
     }
+
+    public function projects()
+    {
+        return $this->hasMany('App\Project');
+    }
 }

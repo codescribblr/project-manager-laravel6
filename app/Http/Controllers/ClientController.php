@@ -65,7 +65,9 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         return view('clients.show')
-            ->with('client', $client);
+            ->with('client', $client)
+            ->with('latest_active_projects', $client->projects->where('status', 'active')->sortByDesc('updated_at')->slice(0, 5))
+            ->with('latest_inactive_projects', $client->projects->where('status', 'inactive')->sortByDesc('updated_at')->slice(0, 5));
     }
 
     /**

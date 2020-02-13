@@ -21,3 +21,11 @@ Route::get('clients/{client}/notes/{note}/delete', 'ClientNoteController@destroy
 Route::resource('clients.notes', 'ClientNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
+
+Route::get('projects/{project}/delete', 'ProjectController@destroyConfirm');
+Route::resource('projects', 'ProjectController');
+
+Route::get('projects/{project}/notes/{note}/delete', 'ProjectNoteController@destroyConfirm');
+Route::resource('projects.notes', 'ProjectNoteController')->only([
+    'create', 'store', 'edit', 'update', 'destroy',
+]);

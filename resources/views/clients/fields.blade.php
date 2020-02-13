@@ -19,7 +19,7 @@
     <input type="tel" name="contact_phone" class="form-control" id="phone" placeholder="Enter phone" value="{{ old('contact_phone') ? old('contact_phone') : @$client->contact_phone }}">
     <small class="form-text text-danger">{{ $errors->first('contact_phone') }}</small>
 </div>
-@if(isset($client))
+@if(isset($client->status))
     <div class="form-group">
         <label for="status">Status</label>
         <select name="status" id="status" class="custom-select">

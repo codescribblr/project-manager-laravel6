@@ -31,7 +31,7 @@
 
     <!-- Nav Item - Projects -->
     <li class="nav-item">
-        <a class="nav-link" href="projects/list.html">
+        <a class="nav-link" href="{{ action('ProjectController@index') }}">
             <i class="fas fa-fw fa-folder"></i>
             <span>Projects</span></a>
     </li>
