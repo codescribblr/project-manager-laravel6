@@ -69,16 +69,20 @@ class ClientController extends Controller
             ->with('client', $client)
             ->with('latest_active_projects', $client->projects->where('status', 'active')->sortByDesc('updated_at')->slice(0, 5))
             ->with('latest_inactive_projects', $client->projects->where('status', 'inactive')->sortByDesc('updated_at')->slice(0, 5))
-            ->with('latest_open_tasks', \App\Task::hydrate(
-                DB::table('tasks')
-                    ->join('projects', function($join) use ($client) {
-                        $join->on('projects.id', '=', 'tasks.project_id')
-                            ->where('projects.client_id', '=', $client->id);
-                    })->select('tasks.*')
-                    ->limit(5)
-                    ->get()
-                    ->toArray()
-            ));
+            // Leaving this query here for posterity. It produces the exact same result with a different query.
+            // https://stackoverflow.com/a/60215254/366036
+//            ->with('latest_open_tasks', \App\Task::where('status', 'open')
+//                ->whereHas('project', function($query) use ($client) {
+//                    $query->where('client_id', $client->id)
+//                        ->where('status', 'active');
+//                })
+//                ->get()
+//            );
+            ->with('latest_open_tasks', $client->tasks()
+                ->where('projects.status', '=', 'active')
+                ->where('tasks.status', '=', 'open')
+                ->get()
+            );
     }
 
     /**
