@@ -23,9 +23,10 @@ class Client extends Model
     {
         return $this->hasMany('App\Project');
     }
+
     public function tasks()
     {
-        return $this->hasManyThrough(Task::class, Project::class);
+        return $this->hasManyThrough('App\Task', 'App\Project');
     }
 
 }
