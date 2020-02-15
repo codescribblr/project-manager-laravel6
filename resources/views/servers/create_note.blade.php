@@ -23,6 +23,7 @@
                     <small class="form-text text-danger">{{ $errors->first('details') }}</small>
                 </div>
 
+                <a href="{{ action('ServerController@show', ['server' => $server]) }}" class="btn btn-lg btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-warning">Create Server Note</button>
 
             </div>

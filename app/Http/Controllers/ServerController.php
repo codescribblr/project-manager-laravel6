@@ -15,7 +15,7 @@ class ServerController extends Controller
      */
     public function index()
     {
-        $servers = Server::get();
+        $servers = Server::all();
         return view('servers.index')
             ->with('servers', $servers);
     }
@@ -62,7 +62,11 @@ class ServerController extends Controller
     public function show(Server $server)
     {
         return view('servers.show')
-            ->with('server', $server);
+            ->with('server', $server)
+            ->with('clients', \App\Client::whereHas('projects.servers', function($query) use ($server) {
+                $query->where('server_id', '=', $server->id);
+            })->get()
+        );
     }
 
     /**
@@ -137,7 +141,9 @@ class ServerController extends Controller
             $project->servers()->save($server);
             return redirect()->action('ProjectController@show', ['project' => $project]);
         }
-        $servers = Server::all();
+        $servers = Server::whereDoesntHave('projects', function($query) use ($project) {
+            $query->where('project_id', '=', $project->id);
+        })->get();
         return view('servers.attach')
             ->with('project', $project)
             ->with('servers', $servers);

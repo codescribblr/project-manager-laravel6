@@ -19,4 +19,14 @@ class Server extends Model
     {
         return $this->hasMany('App\ServerNote');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', 'active');
+    }
+
+    public function scopeTotalMonthlyCost($query)
+    {
+        return $query->sum('cost');
+    }
 }

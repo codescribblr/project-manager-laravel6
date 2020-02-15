@@ -19,4 +19,14 @@ class Task extends Model
     {
         return $this->hasMany('App\TaskNote');
     }
+
+    public function scopeOpen($query)
+    {
+        return $query->where('status', '=', 'open');
+    }
+
+    public function scopeOverdue($query)
+    {
+        return $query->where('due_date', '<', strtotime('today'));
+    }
 }

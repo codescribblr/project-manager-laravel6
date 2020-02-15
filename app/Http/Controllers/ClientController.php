@@ -82,7 +82,11 @@ class ClientController extends Controller
                 ->where('projects.status', '=', 'active')
                 ->where('tasks.status', '=', 'open')
                 ->get()
-            );
+            )
+            ->with('servers', \App\Server::whereHas('projects', function($query) use ($client) {
+                $query->where('client_id', '=', $client->id);
+            })->get()
+        );
     }
 
     /**

@@ -37,6 +37,9 @@
                     <p><strong>Start Date:</strong> {{ $task->start_date ? date('F j, Y', strtotime($task->start_date)) : "None" }}</p>
                     <p><strong>Due Date:</strong> {{ $task->due_date ? date('F j, Y', strtotime($task->due_date)) : "None" }}</p>
                     <p><strong>Status:</strong> {{ $task->status }}</p>
+                    @if($task->status == 'completed')
+                        <p><strong>Completed On:</strong> {{ date('F j, Y h:i a', strtotime($task->completed_at)) }}</p>
+                    @endif
                 </div>
             </div>
 
@@ -92,7 +95,7 @@
                                     <span class="text">Edit Note</span>
                                 </a>
                             </p>
-                            <p>{{ $note->details }}</p>
+                            <p>{!! nl2br(e($note->details)) !!}</p>
                         </div>
                     </div>
                 @endforeach
@@ -115,6 +118,15 @@
     <div class="row mb-5">
         <div class="col-lg-12">
             <a href="{{ action('TaskController@destroyConfirm', ['task' => $task]) }}" class="btn btn-danger float-right">Delete Task</a>
+            <form method="POST" action="{{ action('TaskController@markComplete', ['task' => $task]) }}" class="float-right mr-2">
+                @csrf
+                <button class="d-sm-inline-block btn btn-info btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Mark Complete</span>
+                </button>
+            </form>
         </div>
     </div>
 @endsection

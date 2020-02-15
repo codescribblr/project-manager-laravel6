@@ -41,10 +41,14 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12 mb-2">
-            <h2 class="h4 mb-0 text-gray-800">Tasks</h2>
-        </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-2">
+        <h2 class="h4 mb-0 text-gray-800">Tasks</h2>
+        <a href="{{ action('TaskController@create', ['project' => $project]) }}" class="d-sm-inline-block btn btn-sm btn-info btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Add New Task</span>
+        </a>
     </div>
 
     <div class="row mb-4">
@@ -64,7 +68,7 @@
                             @endforeach
                         </ul>
                     @else
-                        <p>No Active Projects</p>
+                        <p>No Open Tasks</p>
                     @endif
                 </div>
             </div>
@@ -84,7 +88,7 @@
                             @endforeach
                         </ul>
                     @else
-                        <p>No Active Projects</p>
+                        <p>No Completed Tasks</p>
                     @endif
                 </div>
             </div>
@@ -164,7 +168,7 @@
                                     <span class="text">Edit Note</span>
                                 </a>
                             </p>
-                            <p>{{ $note->details }}</p>
+                            <p>{!! nl2br(e($note->details)) !!}</p>
                         </div>
                     </div>
                 @endforeach

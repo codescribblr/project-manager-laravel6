@@ -23,6 +23,7 @@
                     <small class="form-text text-danger">{{ $errors->first('details') }}</small>
                 </div>
 
+                <a href="{{ action('TaskController@show', ['task' => $task]) }}" class="btn btn-lg btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-info">Create Task Note</button>
 
             </div>

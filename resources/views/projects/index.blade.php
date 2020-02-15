@@ -21,11 +21,11 @@
     <!-- Content Row -->
     <div class="row">
         <div class="col-lg-6 mb-4">
-            <h2 class="h5 mb-0 text-gray-800">Active Projects</h2>
+            <h2 class="h5 mb-3 text-gray-800">Active Projects</h2>
             @if(count($projects->where('status', 'active')) > 0)
                 <div class="list-group">
                     @foreach($projects->where('status', 'active') as $project)
-                        <a href="{{ action('ProjectController@show', ['project' => $project->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-primary">{{ $project->name }}</a>
+                        <a href="{{ action('ProjectController@show', ['project' => $project->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-primary">{{ $project->name }} - <span class="text-success">({{ $project->client->name }})</span></a>
                     @endforeach
                 </div>
             @else
@@ -36,11 +36,11 @@
     </div>
     <div class="row">
         <div class="col-lg-6 mb-4">
-            <h2 class="h5 mb-0 text-gray-800">Inactive Projects</h2>
+            <h2 class="h5 mb-3 text-gray-800">Inactive Projects</h2>
             @if(count($projects->where('status', 'inactive')) > 0)
                 <div class="list-group">
                     @foreach($projects->where('status', 'inactive') as $project)
-                        <a href="{{ action('ProjectController@show', ['project' => $project->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-primary">{{ $project->name }}</a>
+                        <a href="{{ action('ProjectController@show', ['project' => $project->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-primary">{{ $project->name }} - <span class="text-success">({{ $project->client->name }})</span></a>
                     @endforeach
                 </div>
             @else

@@ -30,6 +30,7 @@ Route::resource('projects.notes', 'ProjectNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
 
+Route::post('tasks/{task}/mark-complete', 'TaskController@markComplete');
 Route::get('tasks/{task}/delete', 'TaskController@destroyConfirm');
 Route::resource('tasks', 'TaskController');
 

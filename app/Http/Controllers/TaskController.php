@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use App\Project;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -23,11 +24,17 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $task = new Task();
+        if($request->input('project') != null){
+            return view('tasks.create')
+                ->with('task', $task)
+                ->with('project', Project::find($request->input('project')));
+        }
         $projects = Project::where('status', 'active')->get();
         return view('tasks.create')
             ->with('task', $task)
@@ -124,5 +131,15 @@ class TaskController extends Controller
     {
         $task->delete();
         return redirect()->action('TaskController@index');
+    }
+
+    public function markComplete(Request $request, Task $task)
+    {
+        if($request->isMethod('post')){
+            $task->completed_at = Carbon::now();
+            $task->status = 'completed';
+            $task->save();
+            return redirect()->action('TaskController@show', ['task' => $task]);
+        }
     }
 }

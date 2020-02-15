@@ -29,4 +29,9 @@ class Client extends Model
         return $this->hasManyThrough('App\Task', 'App\Project');
     }
 
+    public function servers()
+    {
+        return $this->hasManyThrough('App\Server', 'App\Project');
+    }
+
 }

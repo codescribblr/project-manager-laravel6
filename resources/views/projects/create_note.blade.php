@@ -23,6 +23,7 @@
                     <small class="form-text text-danger">{{ $errors->first('details') }}</small>
                 </div>
 
+                <a href="{{ action('ProjectController@show', ['project' => $project]) }}" class="btn btn-lg btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-primary">Create Project Note</button>
 
             </div>

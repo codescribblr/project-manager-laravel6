@@ -102,10 +102,15 @@
                     <h6 class="m-0 font-weight-bold text-warning">Servers</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="../servers/detail.html" class="text-warning">Server 1</a></li>
-                        <li><a href="../servers/detail.html" class="text-warning">Server 2</a></li>
-                    </ul>
+                    @if($servers->count() > 0)
+                        <ul>
+                            @foreach($servers as $server)
+                                <li><a href="{{ action('ServerController@show', ['server' => $server]) }}" class="text-warning">{{ $server->hostname }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Attached Servers</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -158,7 +163,7 @@
                                     <span class="text">Edit Note</span>
                                 </a>
                             </p>
-                            <p>{{ $note->details }}</p>
+                            <p>{!! nl2br(e($note->details)) !!}</p>
                         </div>
                     </div>
                 @endforeach

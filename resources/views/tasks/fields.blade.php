@@ -1,12 +1,16 @@
 @if(!isset($task->project))
-    <div class="form-group">
-        <label for="project">Project</label>
-        <select name="project" id="project" class="custom-select">
-            @foreach($projects as $project)
-                <option value="{{ $project->id }}" {{ old('project') === $project->id ? 'selected' : ($task->project === $project ? 'selected' : '') }}>{{ $project->name }}</option>
-            @endforeach
-        </select>
-    </div>
+    @if(isset($project))
+        <input type="hidden" name="project" value="{{ $project->id }}" />
+    @else
+        <div class="form-group">
+            <label for="project">Project</label>
+            <select name="project" id="project" class="custom-select">
+                @foreach($projects as $project)
+                    <option value="{{ $project->id }}" {{ old('project') === $project->id ? 'selected' : ($task->project === $project ? 'selected' : '') }}>{{ $project->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
 @endif
 <div class="form-group">
     <label for="name">Task Name</label>

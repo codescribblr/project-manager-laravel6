@@ -21,11 +21,11 @@
     <!-- Content Row -->
     <div class="row">
         <div class="col-lg-6 mb-4">
-            <h2 class="h5 mb-0 text-gray-800">Open Tasks</h2>
+            <h2 class="h5 mb-3 text-gray-800">Open Tasks</h2>
             @if(count($tasks->where('status', 'open')) > 0)
                 <div class="list-group">
                     @foreach($tasks->where('status', 'open') as $task)
-                        <a href="{{ action('TaskController@show', ['task' => $task->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-info">{{ $task->name }}</a>
+                        <a href="{{ action('TaskController@show', ['task' => $task->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-info">{{ $task->name }} - <span class="text-primary">({{ $task->project->name }})</span> - <span class="text-success">({{ $task->project->client->name }})</span></a>
                     @endforeach
                 </div>
             @else
@@ -36,11 +36,11 @@
     </div>
     <div class="row">
         <div class="col-lg-6 mb-4">
-            <h2 class="h5 mb-0 text-gray-800">Completed Tasks</h2>
+            <h2 class="h5 mb-3 text-gray-800">Completed Tasks</h2>
             @if(count($tasks->where('status', 'completed')) > 0)
                 <div class="list-group">
                     @foreach($tasks->where('status', 'completed') as $task)
-                        <a href="{{ action('TaskController@show', ['task' => $task->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-info">{{ $task->name }}</a>
+                        <a href="{{ action('TaskController@show', ['task' => $task->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-info">{{ $task->name }} - <span class="text-primary">({{ $task->project->name }})</span> - <span class="text-success">({{ $task->project->client->name }})</span></a>
                     @endforeach
                 </div>
             @else

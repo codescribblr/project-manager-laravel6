@@ -21,8 +21,8 @@
     <!-- Content Row -->
     <div class="row">
         <div class="col-lg-6 mb-4">
-            <h2 class="h5 mb-0 text-gray-800">Active Servers</h2>
-            @if(count($servers->where('status', 'open')) > 0)
+            <h2 class="h5 mb-3 text-gray-800">Active Servers</h2>
+            @if(count($servers->where('status', 'active')) > 0)
                 <div class="list-group">
                     @foreach($servers->where('status', 'active') as $server)
                         <a href="{{ action('ServerController@show', ['server' => $server->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-warning">{{ $server->hostname }}</a>
@@ -36,8 +36,8 @@
     </div>
     <div class="row">
         <div class="col-lg-6 mb-4">
-            <h2 class="h5 mb-0 text-gray-800">Inactive Servers</h2>
-            @if(count($servers->where('status', 'completed')) > 0)
+            <h2 class="h5 mb-3 text-gray-800">Inactive Servers</h2>
+            @if(count($servers->where('status', 'inactive')) > 0)
                 <div class="list-group">
                     @foreach($servers->where('status', 'inactive') as $server)
                         <a href="{{ action('ServerController@show', ['server' => $server->id]) }}" class="h6 mb-1 list-group-item list-group-item-action text-warning">{{ $server->hostname }}</a>

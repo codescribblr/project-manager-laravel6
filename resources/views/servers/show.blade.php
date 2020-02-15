@@ -33,7 +33,7 @@
                     <p><strong>Server Name:</strong> {{ $server->hostname }}</p>
                     <p><strong>Server Public IP:</strong> {{ $server->public_ip }}</p>
                     <p><strong>Server Platform:</strong> {{ $server->platform }}</p>
-                    <p><strong>Server Montly Cost:</strong> {{ $server->cost }}</p>
+                    <p><strong>Server Monthly Cost:</strong> ${{ $server->cost / 100 }}</p>
                     <p><strong>Server Total Slots:</strong> {{ $server->slots }}</p>
                     <p><strong>Server Available Slots:</strong> {{ $server->slots - $server->projects()->count() }}</p>
                     <p><strong>Server Capacity:</strong> {{ $server->capacity }}</p>
@@ -70,6 +70,25 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card mb-2">
+                <!-- Inactive Servers -->
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-success">Clients</h6>
+                </div>
+                <div class="card-body">
+                    @if($clients->count() > 0)
+                        <ul>
+                            @foreach($clients->where('status', 'active') as $client)
+                                <li><a href="{{ action('ClientController@show', ['client' => $client]) }}" class="text-success">{{ $client->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Active Clients</p>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -98,7 +117,7 @@
                                     <span class="text">Edit Note</span>
                                 </a>
                             </p>
-                            <p>{{ $note->details }}</p>
+                            <p>{!! nl2br(e($note->details)) !!}</p>
                         </div>
                     </div>
                 @endforeach

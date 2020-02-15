@@ -19,6 +19,7 @@
             <div class="col-lg-6 mb-4">
                 @include('servers.fields')
 
+                <a href="{{ action('ServerController@index') }}" class="btn btn-lg btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-lg btn-warning">Create Server</button>
 
             </div>
