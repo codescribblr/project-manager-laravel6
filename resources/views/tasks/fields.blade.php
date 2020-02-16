@@ -29,7 +29,7 @@
 </div>
 <div class="form-group">
     <label for="due_date">Task Due Date</label>
-    <input type="date" name="due_date" class="form-control" id="start_date" placeholder="yyyy-mm-dd" value="{{ old('due_date') ? old('due_date') : @$task->due_date }}">
+    <input type="date" name="due_date" class="form-control" id="due_date" placeholder="yyyy-mm-dd" value="{{ old('due_date') ? old('due_date') : @$task->due_date }}">
     <small class="form-text text-danger">{{ $errors->first('due_date') }}</small>
 </div>
 @if(isset($task->status))

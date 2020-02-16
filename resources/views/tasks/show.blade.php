@@ -118,6 +118,7 @@
     <div class="row mb-5">
         <div class="col-lg-12">
             <a href="{{ action('TaskController@destroyConfirm', ['task' => $task]) }}" class="btn btn-danger float-right">Delete Task</a>
+            @if($task->status == 'open')
             <form method="POST" action="{{ action('TaskController@markComplete', ['task' => $task]) }}" class="float-right mr-2">
                 @csrf
                 <button class="d-sm-inline-block btn btn-info btn-icon-split">
@@ -127,6 +128,7 @@
                     <span class="text">Mark Complete</span>
                 </button>
             </form>
+            @endif
         </div>
     </div>
 @endsection

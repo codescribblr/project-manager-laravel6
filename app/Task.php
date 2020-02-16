@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $fillable = [
-        'name', 'description', 'start_date', 'due_date', 'status',
+        'name', 'description', 'start_date', 'due_date', 'status', 'completed_at',
     ];
 
     public function project()
@@ -27,6 +27,7 @@ class Task extends Model
 
     public function scopeOverdue($query)
     {
-        return $query->where('due_date', '<', strtotime('today'));
+        return $query->whereNotNull('due_date')
+                ->where('due_date', '<', strtotime('today'));
     }
 }

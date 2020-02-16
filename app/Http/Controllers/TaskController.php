@@ -102,8 +102,14 @@ class TaskController extends Controller
                 'name' => ['required', 'max:255'],
             ]
         );
+        $completed_at = $task->completed_at;
         if($valid){
             $task->fill($request->input());
+            if($task->status == 'open'){
+                $task->completed_at = null;
+            } else {
+                $task->completed_at = $completed_at;
+            }
             $task->save();
             return redirect()->action('TaskController@show', ['task' => $task]);
         }
