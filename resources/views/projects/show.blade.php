@@ -132,10 +132,23 @@
                     <h6 class="m-0 font-weight-bold text-primary">Files</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="../tasks/detail.html" class="text-primary">Task 1</a></li>
-                        <li><a href="../tasks/detail.html" class="text-primary">Task 2</a></li>
-                    </ul>
+                    @if($project->files->count() > 0)
+                        <ul>
+                            @foreach($project->files as $file)
+                                <li>
+                                    <a href="{{ Storage::url($file->filename) }}" class="text-primary">{{ $file->name }}</a>
+                                    <a href="{{ action('ProjectController@deleteFile', ['project' => $project, 'file' => $file]) }}" class="d-xs-block d-sm-inline-block btn btn-sm btn-danger ml-1">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Files</p>
+                    @endif
+                    <p><button type="button" data-toggle="modal" data-target="#projectFilesModal" class="btn btn-primary">Upload A File</button></p>
                 </div>
             </div>
 
@@ -191,6 +204,43 @@
     <div class="row mb-5">
         <div class="col-lg-12">
             <a href="{{ action('ProjectController@destroyConfirm', ['project' => $project]) }}" class="btn btn-danger float-right">Delete Project</a>
+            @if($project->status == 'active')
+                <form method="POST" action="{{ action('ProjectController@archive', ['project' => $project]) }}" class="float-right mr-2">
+                    @csrf
+                    <button class="d-sm-inline-block btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                        <span class="text">Archive</span>
+                    </button>
+                </form>
+            @endif
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="projectFilesModal" tabindex="-1" role="dialog" aria-labelledby="projectFilesModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ action('ProjectController@upload', ['project' => $project]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="projectFilesModalLabel">Upload a Project File</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="projectFile" name="file">
+                            <label class="custom-file-label" for="projectFile">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

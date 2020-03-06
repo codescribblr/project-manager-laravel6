@@ -51,7 +51,7 @@ class ClientController extends Controller
             ]
         );
         if($valid){
-            $client = Client::create($request->input());
+            $client = Client::create($valid);
             return redirect()->action('ClientController@show', ['client' => $client]);
         }
 
@@ -120,7 +120,7 @@ class ClientController extends Controller
             ]
         );
         if($valid){
-            $client->fill($request->input());
+            $client->fill($valid);
             $client->save();
             return redirect()->action('ClientController@show', ['client' => $client]);
         }

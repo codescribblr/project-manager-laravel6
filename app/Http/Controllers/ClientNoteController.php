@@ -39,7 +39,7 @@ class ClientNoteController extends Controller
             ]
         );
         if($valid){
-            $clientNote = $client->notes()->create($request->input());
+            $clientNote = $client->notes()->create($valid);
             return redirect()->action('ClientController@show', ['client' => $clientNote->client]);
         }
     }
@@ -75,7 +75,7 @@ class ClientNoteController extends Controller
             ]
         );
         if($valid){
-            $note->fill($request->input());
+            $note->fill($valid);
             $note->save();
             return redirect()->action('ClientController@show', ['client' => $note->client]);
         }

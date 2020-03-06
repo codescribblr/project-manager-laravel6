@@ -48,7 +48,7 @@ class ServerController extends Controller
                 'platform' => ['required', 'max:255'],
             ]);
         if($valid){
-            $server = Server::create($request->input());
+            $server = Server::create($valid);
             return redirect()->action('ServerController@show', ['server' => $server]);
         }
     }
@@ -99,7 +99,7 @@ class ServerController extends Controller
             ]
         );
         if($valid){
-            $server->fill($request->input());
+            $server->fill($valid);
             $server->save();
             return redirect()->action('ServerController@show', ['server' => $server]);
         }

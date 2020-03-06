@@ -39,7 +39,7 @@ class ProjectNoteController extends Controller
             ]
         );
         if($valid){
-            $note = $project->notes()->create($request->input());
+            $note = $project->notes()->create($valid);
             return redirect()->action('ProjectController@show', ['project' => $project]);
         }
     }
@@ -76,7 +76,7 @@ class ProjectNoteController extends Controller
             ]
         );
         if($valid){
-            $note->fill($request->input());
+            $note->fill($valid);
             $note->save();
             return redirect()->action('ProjectController@show', ['project' => $project]);
         }

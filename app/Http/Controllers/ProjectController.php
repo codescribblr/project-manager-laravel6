@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Client;
+use App\ProjectFile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -48,8 +51,8 @@ class ProjectController extends Controller
                 'name' => ['required', 'max:255'],
         ]);
         if($valid){
-            $client = Client::find($request->input('client'));
-            $project = $client->projects()->create($request->input());
+            $client = Client::find($valid['client']);
+            $project = $client->projects()->create($valid);
             return redirect()->action('ProjectController@show', ['project' => $project]);
         }
     }
@@ -96,7 +99,7 @@ class ProjectController extends Controller
             ]
         );
         if($valid){
-            $project->fill($request->input());
+            $project->fill($valid);
             $project->save();
             return redirect()->action('ProjectController@show', ['project' => $project]);
         }
@@ -124,5 +127,48 @@ class ProjectController extends Controller
     {
         $project->delete();
         return redirect()->action('ProjectController@index');
+    }
+
+    public function archive(Request $request, Project $project)
+    {
+        if($request->isMethod('post')){
+            $project->completed_at = Carbon::now();
+            $project->status = 'inactive';
+            $project->save();
+            return redirect()->action('ProjectController@show', ['project' => $project]);
+        }
+    }
+
+    /**
+     * Upload a file.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Project  $project
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(Request $request, Project $project)
+    {
+        $filename = $request->file('file')->store('project_files');
+        $project->files()->create([
+            'filename' => $filename,
+            'name' => $request->file('file')->getClientOriginalName(),
+        ]);
+
+        return redirect()->action('ProjectController@show', ['project' => $project]);
+    }
+
+    /**
+     * Upload a file.
+     *
+     * @param  \App\Project  $project
+     * @param  \App\ProjectFile  $file
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteFile(Project $project, ProjectFile $file)
+    {
+        Storage::delete($file->filename);
+        $file->delete();
+
+        return redirect()->action('ProjectController@show', ['project' => $project]);
     }
 }

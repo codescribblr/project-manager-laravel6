@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\Project;
+use App\TaskFile;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -55,8 +57,8 @@ class TaskController extends Controller
                 'name' => ['required', 'max:255'],
             ]);
         if($valid){
-            $project = Project::find($request->input('project'));
-            $task = $project->tasks()->create($request->input());
+            $project = Project::find($valid['project']);
+            $task = $project->tasks()->create($valid);
             return redirect()->action('TaskController@show', ['task' => $task]);
         }
     }
@@ -104,7 +106,7 @@ class TaskController extends Controller
         );
         $completed_at = $task->completed_at;
         if($valid){
-            $task->fill($request->input());
+            $task->fill($valid);
             if($task->status == 'open'){
                 $task->completed_at = null;
             } else {
@@ -147,5 +149,37 @@ class TaskController extends Controller
             $task->save();
             return redirect()->action('TaskController@show', ['task' => $task]);
         }
+    }
+
+    /**
+     * Upload a file.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Task  $task
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(Request $request, Task $task)
+    {
+      $filename = $request->file('file')->store('task_files');
+        $task->files()->create([
+            'filename' => $filename,
+            'name' => $request->file('file')->getClientOriginalName(),
+        ]);
+        return redirect()->action('TaskController@show', ['task' => $task]);
+    }
+
+    /**
+     * Upload a file.
+     *
+     * @param  \App\Task  $task
+     * @param  \App\TaskFile  $file
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteFile(Task $task, TaskFile $file)
+    {
+        Storage::delete($file->filename);
+        $file->delete();
+
+        return redirect()->action('TaskController@show', ['task' => $task]);
     }
 }

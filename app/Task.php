@@ -20,6 +20,11 @@ class Task extends Model
         return $this->hasMany('App\TaskNote');
     }
 
+    public function files()
+    {
+        return $this->hasMany('App\TaskFile');
+    }
+
     public function scopeOpen($query)
     {
         return $query->where('status', '=', 'open');

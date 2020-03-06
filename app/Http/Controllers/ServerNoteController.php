@@ -39,7 +39,7 @@ class ServerNoteController extends Controller
             ]
         );
         if($valid){
-            $note = $server->notes()->create($request->input());
+            $note = $server->notes()->create($valid);
             return redirect()->action('ServerController@show', ['server' => $server]);
         }
     }
@@ -76,7 +76,7 @@ class ServerNoteController extends Controller
             ]
         );
         if($valid){
-            $note->fill($request->input());
+            $note->fill($valid);
             $note->save();
             return redirect()->action('ServerController@show', ['server' => $server]);
         }

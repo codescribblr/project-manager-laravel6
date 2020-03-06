@@ -60,10 +60,23 @@
                     <h6 class="m-0 font-weight-bold text-info">Files</h6>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li><a href="../tasks/detail.html" class="text-info">Task 1</a></li>
-                        <li><a href="../tasks/detail.html" class="text-info">Task 2</a></li>
-                    </ul>
+                    @if($task->files->count() > 0)
+                        <ul>
+                            @foreach($task->files as $file)
+                                <li>
+                                    <a href="{{ Storage::url($file->filename) }}" class="text-info">{{ $file->name }}</a>
+                                    <a href="{{ action('TaskController@deleteFile', ['task' => $task, 'file' => $file]) }}" class="d-xs-block d-sm-inline-block btn btn-sm btn-danger ml-1">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No Files</p>
+                    @endif
+                    <p><button type="button" data-toggle="modal" data-target="#taskFilesModal" class="btn btn-info">Upload A File</button></p>
                 </div>
             </div>
         </div>
@@ -129,6 +142,32 @@
                 </button>
             </form>
             @endif
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="taskFilesModal" tabindex="-1" role="dialog" aria-labelledby="taskFilesModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ action('TaskController@upload', ['task' => $task]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskFilesModalLabel">Upload a Task File</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="taskFile" name="file">
+                            <label class="custom-file-label" for="taskFile">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info">Upload</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

@@ -13,16 +13,18 @@ class CreateProjectFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('projects_files', function (Blueprint $table) {
+        Schema::create('project_files', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 255);
             $table->string('filename', 255);
-            $table->string('location', 255);
             $table->unsignedBigInteger('project_id')->index('project_id')->comment('The corresponding project.');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onDelete('cascade');
         });
     }
 
@@ -33,6 +35,6 @@ class CreateProjectFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects_files');
+        Schema::dropIfExists('project_files');
     }
 }

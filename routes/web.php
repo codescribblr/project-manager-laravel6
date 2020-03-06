@@ -22,6 +22,9 @@ Route::resource('clients.notes', 'ClientNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
 
+Route::post('projects/{project}/upload', 'ProjectController@upload');
+Route::get('projects/{project}/file/{file}/delete', 'ProjectController@deleteFile');
+Route::post('projects/{project}/archive', 'ProjectController@archive');
 Route::get('projects/{project}/delete', 'ProjectController@destroyConfirm');
 Route::resource('projects', 'ProjectController');
 
@@ -30,6 +33,8 @@ Route::resource('projects.notes', 'ProjectNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
 
+Route::post('tasks/{task}/upload', 'TaskController@upload');
+Route::get('tasks/{task}/file/{file}/delete', 'TaskController@deleteFile');
 Route::post('tasks/{task}/mark-complete', 'TaskController@markComplete');
 Route::get('tasks/{task}/delete', 'TaskController@destroyConfirm');
 Route::resource('tasks', 'TaskController');
@@ -47,5 +52,5 @@ Route::resource('servers.notes', 'ServerNoteController')->only([
     'create', 'store', 'edit', 'update', 'destroy',
 ]);
 
-Route::get('servers/attach/{project?}', 'ServerController@attach')->name('attach_server');
-Route::post('servers/attach/{project?}', 'ServerController@attach')->name('attach_server');
+Route::get('servers/attach/{project}', 'ServerController@attach')->name('attach_server');
+Route::post('servers/attach/{project}', 'ServerController@attach')->name('attach_server');

@@ -39,7 +39,7 @@ class TaskNoteController extends Controller
             ]
         );
         if($valid){
-            $note = $task->notes()->create($request->input());
+            $note = $task->notes()->create($valid);
             return redirect()->action('TaskController@show', ['task' => $task]);
         }
     }
@@ -76,7 +76,7 @@ class TaskNoteController extends Controller
             ]
         );
         if($valid){
-            $note->fill($request->input());
+            $note->fill($valid);
             $note->save();
             return redirect()->action('TaskController@show', ['task' => $task]);
         }
