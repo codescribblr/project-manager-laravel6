@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $totals = [
             'projects' => \App\Project::count(),
             'clients' => \App\Client::count(),
-            'overdue_tasks_percent' => number_format((float)\App\Task::overdue()->count() / \App\Task::open()->count() * 100, 2, '.', ','),
+            'overdue_tasks_percent' => \App\Task::open()->count() ? number_format((float)\App\Task::overdue()->count() / \App\Task::open()->count() * 100, 2, '.', ',') : 0,
             'monthly_server_cost' => \App\Server::active()->totalMonthlyCost() / 100,
         ];
         $servers = \App\Server::where('updated_at', '>', strtotime('last month'))->orderBy('updated_at', 'desc')->limit(10)->get();
